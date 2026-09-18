@@ -1,5 +1,9 @@
 const Database = require('better-sqlite3');
 const path = require('path');
+const fs = require('fs');
+
+fs.mkdirSync(path.join(__dirname, 'data'), { recursive: true });
+
 
 const db = new Database(path.join(__dirname, 'data', 'kalchat.db'));
 db.pragma('journal_mode = WAL');
