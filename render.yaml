@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: kalchat
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: STORY_LIFETIME_HOURS
+        value: 24
+# Remarque : le plan gratuit de Render ne permet pas d'attacher un disque persistant.
+# La base SQLite (backend/data/kalchat.db) sera donc réinitialisée à chaque redéploiement
+# ou après une longue période d'inactivité (le service "s'endort" puis redémarre à neuf).
+# Voir le README pour les options si tu veux une persistance garantie.
