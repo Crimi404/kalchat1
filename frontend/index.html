@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kalchat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="img/logo.svg" />
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#7B5CFA" />
+<link rel="apple-touch-icon" href="img/icon-192.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Kalchat" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ============ ÉCRAN AUTH ============ -->
+<div id="auth-screen" class="auth-screen">
+  <div class="auth-card">
+    <img src="img/logo.svg" alt="Kalchat" class="auth-logo-mark" />
+    <div class="auth-logo">Kalchat</div>
+    <p class="auth-tagline">Ta vibe, ta communauté.</p>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Connexion</button>
+      <button class="auth-tab" data-tab="register">Créer un compte</button>
+    </div>
+
+    <form id="login-form" class="auth-form">
+      <input type="text" id="login-username" placeholder="Nom d'utilisateur" required />
+      <input type="password" id="login-password" placeholder="Mot de passe" required />
+      <button type="submit">Se connecter</button>
+      <p class="auth-error" id="login-error"></p>
+    </form>
+
+    <form id="register-form" class="auth-form hidden">
+      <input type="text" id="register-username" placeholder="Nom d'utilisateur" required />
+      <input type="password" id="register-password" placeholder="Mot de passe (6 caractères min.)" required />
+      <button type="submit">Créer mon compte</button>
+      <p class="auth-error" id="register-error"></p>
+    </form>
+  </div>
+</div>
+
+<!-- ============ APP PRINCIPALE ============ -->
+<div id="app" class="app hidden">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="brand">
+        <img src="img/logo.svg" alt="" class="brand-mark" />
+        <span class="brand-name">Kalchat</span>
+      </div>
+      <button id="logout-btn" class="icon-btn" title="Déconnexion">⏻</button>
+    </div>
+
+    <div class="me-row">
+      <div class="avatar" id="me-avatar">?</div>
+      <span id="me-username"></span>
+    </div>
+
+    <!-- Bandeau des Stories -->
+    <div class="stories-bar" id="stories-bar">
+      <div class="story-item add-story" id="add-story-btn">
+        <div class="story-ring no-ring"><span>+</span></div>
+        <span class="story-label">Votre story</span>
+      </div>
+    </div>
+
+    <div class="search-row">
+      <input type="text" id="user-search" placeholder="Chercher un contact..." />
+      <div id="search-results" class="search-results hidden"></div>
+    </div>
+
+    <button id="new-group-btn" class="ghost-btn">+ Nouveau groupe</button>
+
+    <div class="conversations" id="conversations-list"></div>
+  </aside>
+
+  <main class="chat-area">
+    <div class="main-tabs">
+      <button id="mobile-menu-btn" class="icon-btn menu-btn" title="Menu">☰</button>
+      <button class="main-tab active" data-view="messages">Messages</button>
+      <button class="main-tab" data-view="stories">Fil de Stories</button>
+    </div>
+
+    <div id="empty-state" class="empty-state">
+      <h2>Sélectionne une discussion</h2>
+      <p>Ou lance une nouvelle conversation depuis la recherche.</p>
+    </div>
+
+    <div id="stories-feed" class="stories-feed hidden"></div>
+
+    <div id="coming-soon-panel" class="coming-soon hidden">
+      <div class="cs-icon">🚧</div>
+      <h2 id="coming-soon-title">Bientôt disponible</h2>
+      <p id="coming-soon-text">Cette section arrive dans une prochaine mise à jour de Kalchat.</p>
+    </div>
+
+    <div id="chat-window" class="chat-window hidden">
+      <div class="chat-header">
+        <button id="back-to-list" class="icon-btn back-btn" title="Retour">←</button>
+        <div class="avatar" id="chat-avatar">?</div>
+        <div>
+          <div class="chat-title" id="chat-title">—</div>
+          <div class="chat-subtitle" id="chat-typing"></div>
+        </div>
+      </div>
+
+      <div class="messages" id="messages"></div>
+
+      <form id="message-form" class="message-form">
+        <input type="text" id="message-input" placeholder="Écris un message..." autocomplete="off" />
+        <label class="file-btn" title="Envoyer une image">
+          📎<input type="file" id="message-file" accept="image/*,video/*" hidden />
+        </label>
+        <button type="submit">Envoyer</button>
+      </form>
+    </div>
+  </main>
+</div>
+
+<!-- ============ MODALES ============ -->
+<div id="story-viewer" class="story-viewer hidden">
+  <div class="story-viewer-inner">
+    <div class="story-progress" id="story-progress"></div>
+    <div class="story-viewer-header">
+      <div class="avatar small" id="story-avatar"></div>
+      <span id="story-username"></span>
+      <button id="story-close" class="icon-btn">✕</button>
+    </div>
+    <img id="story-media" src="" alt="" />
+    <div id="story-caption" class="story-caption"></div>
+  </div>
+</div>
+
+<div id="new-group-modal" class="modal hidden">
+  <div class="modal-card">
+    <h3>Nouveau groupe</h3>
+    <input type="text" id="group-name" placeholder="Nom du groupe" />
+    <input type="text" id="group-members-search" placeholder="Ajouter des membres..." />
+    <div id="group-members-results" class="search-results"></div>
+    <div id="group-selected" class="group-selected"></div>
+    <div class="modal-actions">
+      <button id="group-cancel" class="ghost-btn">Annuler</button>
+      <button id="group-create">Créer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NAV BASSE MOBILE ============ -->
+<nav class="bottom-nav" id="bottom-nav">
+  <button class="bn-item" data-bn="accueil">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+    Accueil
+  </button>
+  <button class="bn-item" data-bn="explorer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    Explorer
+  </button>
+  <button class="bn-create" id="bn-create-btn" title="Créer">+</button>
+  <button class="bn-item" data-bn="messages">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Messages
+  </button>
+  <button class="bn-item" data-bn="profil">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+    Profil
+  </button>
+</nav>
+
+<!-- ============ FEUILLE DE CRÉATION (+) ============ -->
+<div id="create-sheet" class="create-sheet hidden">
+  <div class="create-sheet-card">
+    <div class="create-sheet-handle"></div>
+    <div class="create-sheet-grid">
+      <button class="create-option" data-create="post">
+        <span class="co-icon">🖼️</span>
+        Publier
+        <span class="co-sub">Photo / Vidéo</span>
+      </button>
+      <button class="create-option" data-create="story">
+        <span class="co-icon">⚡</span>
+        Story
+        <span class="co-sub">24h</span>
+      </button>
+      <button class="create-option" data-create="texte">
+        <span class="co-icon">Aa</span>
+        Texte
+        <span class="co-sub">Écrire un post</span>
+      </button>
+      <button class="create-option" data-create="media">
+        <span class="co-icon">📁</span>
+        Média
+        <span class="co-sub">Fichiers</span>
+      </button>
+    </div>
+    <button class="create-sheet-cancel" id="create-sheet-cancel">Annuler</button>
+  </div>
+</div>
+
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "Kalchat",
+  "short_name": "Kalchat",
+  "description": "Discute. Partage. Reste connecté.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#14171A",
+  "theme_color": "#7C5CFF",
+  "icons": [
+    { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "img/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
