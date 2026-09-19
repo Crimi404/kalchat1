@@ -1,0 +1,17 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="kalchatGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7B5CFA"/>
+      <stop offset="100%" stop-color="#B355FF"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#kalchatGrad)"/>
+
+  <!-- Lettre K stylisee -->
+  <path d="M32 24 L32 76 L42 76 L42 54 L64 76 L78 76 L52 50 L76 24 L63 24 L42 46 L42 24 Z"
+        fill="#0A0A12"/>
+
+  <!-- Point signal -->
+  <circle cx="70" cy="30" r="6" fill="#0A0A12" opacity="0.55"/>
+</svg>
