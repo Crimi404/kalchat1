@@ -13,7 +13,11 @@ services:
         generateValue: true
       - key: STORY_LIFETIME_HOURS
         value: 24
-# Remarque : le plan gratuit de Render ne permet pas d'attacher un disque persistant.
-# La base SQLite (backend/data/kalchat.db) sera donc réinitialisée à chaque redéploiement
-# ou après une longue période d'inactivité (le service "s'endort" puis redémarre à neuf).
-# Voir le README pour les options si tu veux une persistance garantie.
+      - key: DATABASE_URL
+        sync: false
+# Remarque : Kalchat utilise désormais Supabase (Postgres) comme base de données,
+# et non plus SQLite. La variable DATABASE_URL doit être ajoutée manuellement
+# dans le dashboard Render (Environment), avec la chaîne de connexion Supabase
+# (Project Settings > Database > Connection string > URI, mode "Session pooler"
+# recommandé pour le plan gratuit). Les données sont désormais persistantes et
+# survivent aux redéploiements, contrairement à l'ancienne base SQLite locale.
